@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Login Admin | MyGym</title>
+
+  <link rel="stylesheet" href="login.css">
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+  <main class="login-page">
+
+    <section class="login-card">
+
+      <div class="login-logo">
+        <img src="img/logo.png" alt="Logo MyGym">
+        <h1>My<span>Gym</span></h1>
+      </div>
+
+      <div class="login-text">
+        <span>Acesso restrito</span>
+
+        <h2>Área Administrativa</h2>
+
+        <p>
+          Entre para gerenciar serviços, planos e informações exibidas no site.
+        </p>
+      </div>
+
+      <form class="login-form" onsubmit="fazerLogin(event)">
+
+        <div class="input-group">
+          <label for="usuario">Usuário</label>
+
+          <div class="input-box">
+            <i class="fa-solid fa-user"></i>
+            <input id="usuario" type="text" placeholder="Digite seu usuário" required>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="senha">Senha</label>
+
+          <div class="input-box">
+            <i class="fa-solid fa-lock"></i>
+            <input id="senha" type="password" placeholder="Digite sua senha" required>
+          </div>
+        </div>
+
+        <button type="submit">
+          Entrar
+        </button>
+
+        <p class="login-help">
+          Usuário de teste: <strong>admin</strong> | Senha: <strong>1234</strong>
+        </p>
+
+      </form>
+
+      <a href="index.html" class="back-link">
+        <i class="fa-solid fa-arrow-left"></i>
+        Voltar para o site
+      </a>
+
+    </section>
+
+  </main>
+
+  <script>
+    // CORRIGIDO: Integração assíncrona com o AuthController do Spring Boot
+    async function fazerLogin(event) {
+      event.preventDefault();
+
+      const usuario = document.getElementById("usuario").value.trim();
+      const senha = document.getElementById("senha").value.trim();
+
+      try {
+        const response = await fetch("http://localhost:8080/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ usuario, senha })
+        });
+
+        if (response.ok) {
+          // Mantém a flag que valida o acesso no arquivo admin.js
+          sessionStorage.setItem("adminLogado", "true");
+          window.location.href = "admin.html";
+        } else {
+          alert("Usuário ou senha incorretos.");
+        }
+      } catch (error) {
+        console.error("Erro na autenticação:", error);
+        alert("Não foi possível conectar ao servidor de autenticação.");
+      }
+    }
+  </script>
+
+  <script src="public.js"></script>
+  <script src="script.js"></script>
+
+</body>
+
+</html>
