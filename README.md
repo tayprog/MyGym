@@ -350,6 +350,7 @@ A interface utiliza uma estética fitness moderna, com:
 ## 👩‍💻 Autoria
 
 Projeto desenvolvido para fins acadêmicos.
+
 Taynara Ribeiro de Souza - 202508229366
 Ana Beatriz Barros - 202508318679
 Lyndemberg dos Santos - 202203797182
